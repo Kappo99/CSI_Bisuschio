@@ -43,7 +43,7 @@ function AppComponents() {
 }
 
 function AppRoutes() {
-  const isAuthenticated = useAppSelector((state) => !!state.auth.token);
+  const isAuthenticated = true; //useAppSelector((state) => !!state.auth.token);
 
   return (
     <Router>
