@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { removeNotification } from "./redux/slices/notificationSlice";
 import { PopupProvider } from "./context/PopupContext";
 
-import Home from "./pages/Home";
+import Iscrizione from "./pages/Iscrizione";
 import Profilo from "./pages/Profilo";
 import Login from "./pages/Login";
 import ProtectedRoute from "./pages/ProtectedRoute";
@@ -15,6 +15,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Notifications from "./components/utils/Notifications";
 import Popup from "./components/popup/Popup";
 import Sidebar from "./components/sidebar/Sidebar";
+import Corsi from "./pages/Corsi";
 
 function AppProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -58,7 +59,15 @@ function AppRoutes() {
               path="/"
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
-                  <Home />
+                  <Iscrizione />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/corsi"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <Corsi />
                 </ProtectedRoute>
               }
             />

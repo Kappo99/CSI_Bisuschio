@@ -9,6 +9,9 @@ function Sidebar() {
   const location = useLocation();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768); // Sidebar open on larger screens
+  window.addEventListener('resize', () => {
+    setIsSidebarOpen(window.innerWidth > 768);
+  });
 
   function toggleSidebar() {
     setIsSidebarOpen(!isSidebarOpen);
