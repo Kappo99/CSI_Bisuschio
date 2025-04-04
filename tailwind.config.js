@@ -17,7 +17,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        agenda_primary: {
+        primary: {
           DEFAULT: '#0096D4',
           dark: '#1273eb',
         }

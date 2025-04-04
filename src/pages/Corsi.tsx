@@ -1,24 +1,38 @@
 import React, { useState } from "react";
-import Signature from "../components/utils/Signature";
-import { useAppDispatch } from "../redux/hooks";
-import { addNotification } from "../redux/slices/notificationSlice";
-import { MessageType } from "../types";
+import QRCodeDemo from "../components/QRCodeDemo";
+import { MdQrCodeScanner } from "react-icons/md";
+
+type Corso = {
+  id: number;
+  nome: string;
+};
 
 function Corsi() {
-  const dispatch = useAppDispatch();
-  const [corsi, setCorsi] = useState<{ id: number; nome: string }[]>([]);
-  const [nextId, setNextId] = useState(1);
+  const [corsi, setCorsi] = useState<Corso[]>([
+    { id: 1, nome: "Calcio" },
+    { id: 2, nome: "Basket" },
+    { id: 3, nome: "Pallavolo" },
+  ]);
+  const [nextId, setNextId] = useState(4);
+  const [showQR, setShowQR] = useState(false);
+  const [corsoSelezionato, setCorsoSelezionato] = useState<Corso | null>(null);
+  const [nomeNuovoCorso, setNomeNuovoCorso] = useState("");
 
   const aggiungiCorso = () => {
-    const nome = prompt("Inserisci il nome del corso:");
-    if (nome) {
-      setCorsi([...corsi, { id: nextId, nome }]);
-      setNextId(nextId + 1);
-    }
+    if (!nomeNuovoCorso.trim()) return;
+    setCorsi([...corsi, { id: nextId, nome: nomeNuovoCorso }]);
+    setNextId(nextId + 1);
+    setNomeNuovoCorso("");
   };
 
-  const chiamaFunzione = (id: number) => {
-    dispatch(addNotification({ message: `Funzione chiamata per il corso con ID: ${id}`, type: MessageType.INFO }));
+  const mostraQRCode = (corso: Corso) => {
+    setCorsoSelezionato(corso);
+    setShowQR(true);
+  };
+
+  const chiudiPopup = () => {
+    setShowQR(false);
+    setCorsoSelezionato(null);
   };
 
   return (
@@ -28,12 +42,22 @@ function Corsi() {
         Crea un corso e genera il QR Code per l'iscrizione.
       </p>
 
-      <button className="btn btn-primary mb-4" onClick={aggiungiCorso}>
-        Aggiungi Corso
-      </button>
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-4 mb-6">
+        <input
+          type="text"
+          placeholder="Nome del nuovo corso"
+          value={nomeNuovoCorso}
+          onChange={(e) => setNomeNuovoCorso(e.target.value)}
+          className="border border-gray-300 rounded-lg p-2 w-full md:w-80"
+        />
+        <button onClick={aggiungiCorso} className="btn btn-primary btn-md">
+          Aggiungi Corso
+        </button>
+      </div>
+
       <table className="table-auto w-full border-collapse border border-gray-300">
         <thead>
-          <tr>
+          <tr className="bg-gray-100">
             <th>ID</th>
             <th>Nome</th>
             <th>Azione</th>
@@ -46,18 +70,32 @@ function Corsi() {
               <td>{corso.nome}</td>
               <td>
                 <div className="flex items-center justify-center gap-2">
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => chiamaFunzione(corso.id)}
-                  >
-                    Chiama Funzione
-                  </button>
+                  <MdQrCodeScanner
+                    size={24}
+                    onClick={() => mostraQRCode(corso)}
+                    className="cursor-pointer hover:text-gray-800"
+                  />
                 </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Popup QR Code */}
+      {showQR && corsoSelezionato && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl shadow-lg relative">
+            <button
+              className="absolute top-2 right-2 text-gray-700 hover:text-black"
+              onClick={chiudiPopup}
+            >
+              ✕
+            </button>
+            <QRCodeDemo corsoId={corsoSelezionato.id} />
+          </div>
+        </div>
+      )}
     </section>
   );
 }

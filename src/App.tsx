@@ -16,6 +16,7 @@ import Notifications from "./components/utils/Notifications";
 import Popup from "./components/popup/Popup";
 import Sidebar from "./components/sidebar/Sidebar";
 import Corsi from "./pages/Corsi";
+import Corso from "./pages/Corso";
 
 function AppProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -68,6 +69,14 @@ function AppRoutes() {
               element={
                 <ProtectedRoute isAuthenticated={isAuthenticated}>
                   <Corsi />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/corsi/:corsoId"
+              element={
+                <ProtectedRoute isAuthenticated={isAuthenticated}>
+                  <Corso />
                 </ProtectedRoute>
               }
             />

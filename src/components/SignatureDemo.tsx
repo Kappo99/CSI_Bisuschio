@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
-import { useAppDispatch } from "../../redux/hooks";
-import { addNotification } from "../../redux/slices/notificationSlice";
-import { MessageType } from "../../types";
+import { useAppDispatch } from "../redux/hooks";
+import { addNotification } from "../redux/slices/notificationSlice";
+import { MessageType } from "../types";
 
-const Signature: React.FC = () => {
+const SignatureDemo: React.FC = () => {
   const dispatch = useAppDispatch();
   const sigRef = useRef<SignatureCanvas>(null);
   const [savedImage, setSavedImage] = useState<string | null>(null);
@@ -74,4 +74,4 @@ const Signature: React.FC = () => {
   );
 };
 
-export default Signature;
+export default SignatureDemo;

@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import SignatureDemo from "../components/SignatureDemo";
 
-function Iscrizione() {
+function Corso() {
+  const { corsoId } = useParams();
+
   return (
     <section className="w-full h-full">
-      <h1 className="h1">Iscriviti</h1>
+      <h1 className="h1">Corso {corsoId}</h1>
       <p className="mt-2 mb-6">
-        Compila i tuoi dati e firma il documento per completare l'iscrizione.
+        Questa è una pagina di prova dove vengono mostrate le info del tuo corso.
       </p>
 
       <div className="w-full max-w-3xl bg-white rounded-lg shadow-md p-6">
@@ -29,16 +32,10 @@ function Iscrizione() {
             </label>
           </div>
           <SignatureDemo />
-          {/* <button
-              type="submit"
-              className="bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600 transition duration-200"
-            >
-              Invia
-            </button> */}
         </section>
       </div>
     </section>
   );
 }
 
-export default Iscrizione;
+export default Corso;
