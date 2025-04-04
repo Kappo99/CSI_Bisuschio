@@ -60,7 +60,7 @@ function Corsi() {
           <tr className="bg-gray-100">
             <th>ID</th>
             <th>Nome</th>
-            <th>Azione</th>
+            <th>QR Code</th>
           </tr>
         </thead>
         <tbody>
